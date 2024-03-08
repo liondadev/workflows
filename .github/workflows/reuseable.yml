@@ -1,0 +1,29 @@
+name: Reuseable Workflow
+on:
+  workflow_call:
+    inputs:
+      name:
+        description: Input Description
+        type: string
+        default: "Lion"
+        required: false
+    secrets:
+      access-token:
+        description: The access token
+        required: true
+
+jobs:
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: ls -a
+  log-context-and-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dosp github context
+        run: echo '${{ toJson(github) }}'
+      - name: Display name input
+        run: echo ${{ inputs.name }}
+      - name: Display AT secret
+        run: echo ${{ secrets.name }}
